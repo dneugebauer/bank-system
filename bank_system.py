@@ -18,5 +18,10 @@ def new_account(name, deposit):
         (id, name, deposit, date))
     conn.commit()
 
-def new_table():
-    c.execute('CREATE TABLE IF NOT EXISTs accountbook(accountid TEXT, name TEXT, balance REAL , opendate TEXT)')
+def connect_table():
+    c.execute('CREATE TABLE IF NOT EXISTS accountbook(accountid TEXT, name TEXT, balance INTEGER , opendate TEXT)')
+
+def account_lookup(client):
+    c.execute('SELECT name, balance, accountid, opendate FROM accountbook WHERE name=?', [client])
+    data = c.fetchall() # This is the data set for client
+    print("Account '{}' has a balance of {} coins.".format(data[0][0], data[0][1]))
